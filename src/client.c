@@ -1,6 +1,6 @@
 #include "client.h"
 
-int main(int argc, string argv[]) {
+int main(__attribute__((unused)) int argc, __attribute__((unused)) string argv[]) {
     if (SDL_Init(SDL_INIT_AUDIO) < 0) {
         return 1;
     }
@@ -9,5 +9,6 @@ int main(int argc, string argv[]) {
     // todo: stuff
 
     endAudio();
-    return SDL_Quit();
+    SDL_Quit();
+    return 0;
 }
