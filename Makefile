@@ -34,7 +34,7 @@ SERVER_COMMON_OBJECTS_WIN32=$(addsuffix .32.o,$(addprefix ${OBJECT_DIR}/,${SERVE
 SERVER_COMMON_OBJECTS_WIN64=$(addsuffix .64.o,$(addprefix ${OBJECT_DIR}/,${SERVER_COMMON}))
 SERVER_COMMON_OBJECTS_LINUX=$(addsuffix .o,$(addprefix ${OBJECT_DIR}/,${SERVER_COMMON}))
 
-all: client
+all: format client
 
 client: ${EXE_DIR_WIN32}/client.exe ${EXE_DIR_WIN64}/client.exe ${EXE_DIR_LINUX}/client
 server: ${EXE_DIR_WIN32}/server.exe ${EXE_DIR_WIN64}/server.exe ${EXE_DIR_LINUX}/server
@@ -79,7 +79,10 @@ ${EXE_DIR_LINUX}/server: ${OBJECT_DIR}/server.o ${SERVER_COMMON_OBJECTS_WIN64}
 	$(CC_LIN) -o $@ $^ $(CC_FLAGS_LINUX)
 	cp -r assets ${EXE_DIR_LINUX}/
 
-.PHONY: all clean
+.PHONY: all clean format
+
+format:
+	clang-format-10 -i $(SOURCE_DIR)/*
 
 clean:
 	rm -rf ${OBJECT_DIR}/*.o *~ core $(INCLUDE_DIR)/*~ ${EXE_DIR_WIN32}/* ${EXE_DIR_WIN64}/*
